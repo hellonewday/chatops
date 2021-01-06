@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware, compose } from "redux";
-// import  from "redux-saga";
 import createSagaNiddleware from "redux-saga";
 import rootSagas from "./redux/sagas/index";
 import rootReducer from "./redux/reducers/index";
@@ -19,7 +18,10 @@ export const store = createStore(
   persistedReducer,
   compose(
     applyMiddleware(middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    process.env.NODE_ENV === "production"
+      ? ""
+      : window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
 
