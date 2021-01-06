@@ -1,0 +1,14 @@
+{
+  "counts": 1,
+  "data": [
+    {
+      "activities": [],
+      "_id": "5fe1af5077a6d24034775e5d",
+      "username": "test123",
+      "password": "$2a$10$BgDATbu6mVxcmoa8GYvilOkCcp4b27fLdHZDHgm7nxphDNURO/m.y",
+      "createdAt": "2020-12-22T08:33:20.899Z",
+      "updatedAt": "2020-12-22T08:33:20.899Z",
+      "__v": 0
+    }
+  ]
+}
