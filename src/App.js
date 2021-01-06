@@ -7,12 +7,9 @@ import {
   TextareaAutosize,
   Typography,
 } from "@material-ui/core";
-import Header from "./components/Header";
-import { useSelector } from "react-redux";
 
 function App() {
   const [value, setValue] = useState("");
-  const [setOfValue, setValueSet] = useState([]);
 
   useEffect(() => {
   }, []);
