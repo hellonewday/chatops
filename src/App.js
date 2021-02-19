@@ -7,12 +7,18 @@ import {
   TextareaAutosize,
   Typography,
 } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { requestIntention } from "./redux/actions/intention";
+import { requestCorrection } from "./redux/actions/correction";
 
 function App() {
   const [value, setValue] = useState("");
+  const result = useSelector((state) => ({
+    intention: state.intention,
+    correction: state.correction,
+  }));
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-  }, []);
   const handleChange = (e) => {
     setValue(e.target.value);
   };
@@ -58,19 +64,13 @@ function App() {
 
   const handleIndent = (e) => {
     e.preventDefault();
-    console.log("Intent");
     console.log(value);
-    // Good practice for txt file.
-    console.log(value.split(/[\n]+/));
-    console.log(value.split(/[\n.\s]+/));
+    dispatch(requestIntention(value));
   };
 
   const handleCorrect = (e) => {
     e.preventDefault();
-    console.log("Correct");
-    console.log(value);
-    // console.log(value.split(/[\n\s]+/));
-    console.log(value.split(/[\n.\s]+/));
+    dispatch(requestCorrection(value));
   };
   return (
     <div>

@@ -6,7 +6,9 @@ export const callIntention = async (data) => {
     },
     method: "POST",
     body: JSON.stringify({
-      sequence: data,
+      actType: "Intention",
+      content: data,
+      user: "5fed577b2ee1c426209dbb94",
     }),
   });
   let result = response.json();

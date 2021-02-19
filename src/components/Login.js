@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { requestLogin } from "../redux/actions/accounts";
 const Login = () => {
   const [data, setData] = useState({});
-
   const login = useSelector((state) => state.accounts);
 
   useEffect(() => {

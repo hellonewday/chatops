@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="align-items: center; align-content: center; text-align: center">
+      <h1>Chat Ops API Testing.</h1>
+
+      <label>Ngrok URL:</label>
+      <input type="text" placeholder="Ngrok url" id="url" />
+      <button onclick="getSomeData()">Test this API</button>
+      <h1 id="result"></h1>
+    </div>
+  </body>
+
+  <script>
+    function getSomeData() {
+      fetch(`http://${document.getElementById("url").value}/CMCid`, {
+        method: "POST",
+        body: JSON.stringify({ text: "Hello World" }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          console.log(res);
+          document.getElementById("result").innerHTML = "Passed";
+          document.getElementById("result").style.color = "green";
+        })
+        .catch((error) => {
+          console.log(error);
+          document.getElementById("result").innerHTML = "Error";
+          document.getElementById("result").style.color = "red";
+        });
+    }
+  </script>
+</html>
