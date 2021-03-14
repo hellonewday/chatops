@@ -4,11 +4,11 @@ export const callCorrection = async (data) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": data.authorization
     },
     body: JSON.stringify({
       actType: "Correction",
-      content: data,
-      user: "5fed577b2ee1c426209dbb94",
+      content: data.text,
     }),
   });
   let result = response.json();

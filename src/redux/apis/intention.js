@@ -1,14 +1,14 @@
 export const callIntention = async (data) => {
-  let response = await fetch("SOME_API_HERE", {
+  let response = await fetch("http://localhost:3001/activities", {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": data.authorization
     },
     method: "POST",
     body: JSON.stringify({
       actType: "Intention",
-      content: data,
-      user: "5fed577b2ee1c426209dbb94",
+      content: data.text,
     }),
   });
   let result = response.json();

@@ -1,2 +1,6 @@
-const ip = require("ip");
-
+const data = [
+    {
+        id: 1,
+        c
+    }
+]

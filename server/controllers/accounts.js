@@ -2,7 +2,6 @@ const bcrypt = require("bcryptjs");
 const Joi = require("joi");
 const Account = require("../model/Account");
 const jwt = require("jsonwebtoken");
-
 const validateUser = (user) => {
   const schema = Joi.object({
     username: Joi.string().required().min(6).max(20),
@@ -25,7 +24,7 @@ const isCoincide = (username, password) => {
 
 module.exports.listUsers = (req, res, next) => {
   Account.find()
-    .populate("activities", "actType content")
+    .populate("activities", "actType content createdAt")
     .exec((err, documents) => {
       if (err) return res.status(400).json({ error: err });
       else
@@ -46,6 +45,8 @@ module.exports.getUser = (req, res, next) => {
   });
 };
 
+
+
 module.exports.registerUser = async (req, res, next) => {
   let isExist = await Account.findOne({ username: req.body.username });
   if (isExist)
@@ -57,28 +58,29 @@ module.exports.registerUser = async (req, res, next) => {
   if (!userData.error) {
     if (isCoincide(req.body.username, req.body.password))
       return res
-
         .status(403)
-        .json({ message: "Username and password must be explicit" });
+        .json({ message: "Username and password must be explicit" }); 
     else
       bcrypt.hash(req.body.password, 10, (error, hash) => {
-        if (error) return res.status(400).json({ error });
-        else {
-          let acc = new Account({
-            username: req.body.username,
-            password: hash,
-          });
-          acc
-            .save()
-            .then((response) => {
-              return res.status(201).json({ response });
-            })
-            .catch((err) => {
-              return res.status(400).json({
-                error: err,
-              });
+        let acc = new Account({
+          username: req.body.username,
+          password: hash,
+        });
+        acc
+          .save()
+          .then(() => {
+            let token = jwt.sign({ id: acc._id }, process.env.JWT_SECRET, {
+              expiresIn: "1d",
             });
-        }
+            return res
+              .status(200)
+              .json({ success: true, header: `Bearer ${token}` });
+          })
+          // .catch((err) => {
+          //   return res.status(400).json({
+          //     error: err,
+          //   });
+          // });
       });
   } else {
     return res.status(301).json({ message: userData.error.details[0].message });
@@ -93,7 +95,7 @@ module.exports.loginUser = (req, res, next) => {
   if (!userData.error) {
     Account.findOne({ username: req.body.username }).exec((error, document) => {
       if (error) return res.status(400).json({ error: error });
-      else if (document.length === 0)
+      else if (!document)
         return res.status(404).json({ message: "No user found" });
       else {
         bcrypt.compare(req.body.password, document.password, (err, done) => {

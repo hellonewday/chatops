@@ -29,24 +29,29 @@ function Header() {
                   ChatOps
                 </Link>
               </Typography>
-              <ButtonGroup>
-                <Button color="inherit">
-                  <Link
-                    to="/login"
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    Login
-                  </Link>
-                </Button>
-                <Button color="inherit">
-                  <Link
-                    to="/register"
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    Register
-                  </Link>
-                </Button>
-              </ButtonGroup>
+              {window.localStorage.getItem("auth_token") ? (
+                <Typography variant="h6">Hello {window.localStorage.getItem("username")}</Typography>
+              ) : (
+                <ButtonGroup>
+                  <Button color="inherit">
+                    <Link
+                      to="/login"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Login
+                    </Link>
+                  </Button>
+                  <Button color="inherit">
+                    <Link
+                      to="/register"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Register
+                    </Link>
+                    
+                  </Button>
+                </ButtonGroup>
+              )}
             </div>
           </Toolbar>
         </Container>

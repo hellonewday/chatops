@@ -65,12 +65,22 @@ function App() {
   const handleIndent = (e) => {
     e.preventDefault();
     console.log(value);
-    dispatch(requestIntention(value));
+    dispatch(
+      requestIntention({
+        text: value,
+        authorization: window.localStorage.getItem("auth_token"),
+      })
+    );
   };
 
   const handleCorrect = (e) => {
     e.preventDefault();
-    dispatch(requestCorrection(value));
+    dispatch(
+      requestCorrection({
+        text: value,
+        authorization: window.localStorage.getItem("auth_token"),
+      })
+    );
   };
   return (
     <div>
