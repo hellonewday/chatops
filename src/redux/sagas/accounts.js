@@ -1,11 +1,23 @@
 import { call, put, takeLatest } from "redux-saga/effects";
+import { editUser } from "../../../server/controllers/accounts";
 import {
   responseRegister,
   responseLogin,
   responseUser,
+  responseEdit,
 } from "../actions/accounts";
-import { LOGIN_USER, REGISTER_USER, RETRIEVE_USER } from "../actions/constants";
-import { callLogin, callRegister, callUser } from "../apis/accounts";
+import {
+  EDIT_USER,
+  LOGIN_USER,
+  REGISTER_USER,
+  RETRIEVE_USER,
+} from "../actions/constants";
+import {
+  callEditUser,
+  callLogin,
+  callRegister,
+  callUser,
+} from "../apis/accounts";
 
 function* callSagaRegister(action) {
   try {
@@ -29,7 +41,18 @@ function* callRetrieveUser(action) {
   try {
     const response = yield call(callUser, action.data);
     yield put(responseUser(response));
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* callEdit(action) {
+  try {
+    const response = yield call(callEditUser, action.data);
+    yield put(responseEdit(response));
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export function* watchSagaRegister() {
@@ -42,4 +65,8 @@ export function* watchSagaLogin() {
 
 export function* watchSagaRetrieveUser() {
   yield takeLatest(RETRIEVE_USER, callRetrieveUser);
+}
+
+export function* watchSagaEditUser() {
+  yield takeLatest(EDIT_USER, editUser);
 }

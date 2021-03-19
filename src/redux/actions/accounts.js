@@ -5,6 +5,8 @@ import {
   REGISTER_USER_SUCCESS,
   RETRIEVE_USER,
   RETRIEVE_USER_SUCCESS,
+  EDIT_USER,
+  EDIT_USER_SUCCESS,
 } from "./constants";
 export const requestRegister = (data) => {
   return {
@@ -44,6 +46,20 @@ export const requestUser = (id) => {
 export const responseUser = (response) => {
   return {
     type: RETRIEVE_USER_SUCCESS,
+    response,
+  };
+};
+
+export const requestEdit = (data) => {
+  return {
+    type: EDIT_USER,
+    data,
+  };
+};
+
+export const responseEdit = (response) => {
+  return {
+    type: EDIT_USER_SUCCESS,
     response,
   };
 };

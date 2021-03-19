@@ -42,3 +42,20 @@ export const callUser = async (data) => {
   let result = response.json();
   return result;
 };
+
+export const callEditUser = async (data) => {
+  let response = await fetch(`http://localhost:3001/accounts/${data.id}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: data.authorization,
+    },
+    body: JSON.stringify({
+      username: data.username,
+      password: data.password,
+    }),
+  });
+  let result = response.json();
+  return result;
+};

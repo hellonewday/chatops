@@ -123,7 +123,15 @@ function Header() {
                     Nhật ký hoạt động
                   </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>Cài đặt tài khoản</MenuItem>
+                <MenuItem onClick={handleClose}>
+                  {" "}
+                  <Link
+                    to="/profile"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    Cài đặt tài khoản{" "}
+                  </Link>
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
               </Menu>
             </div>

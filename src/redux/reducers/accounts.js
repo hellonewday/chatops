@@ -1,4 +1,5 @@
 import {
+  EDIT_USER_SUCCESS,
   LOGIN_USER_SUCCESS,
   REGISTER_USER_SUCCESS,
   RETRIEVE_USER_SUCCESS,
@@ -8,6 +9,7 @@ let initialState = {
   loginResponse: {},
   registerResponse: {},
   user: {},
+  editResponse: {},
 };
 
 const accountReducer = function (state = initialState, action) {
@@ -18,6 +20,8 @@ const accountReducer = function (state = initialState, action) {
       return { ...state, registerResponse: action.response };
     case RETRIEVE_USER_SUCCESS:
       return { ...state, user: action.response };
+    case EDIT_USER_SUCCESS:
+      return { ...state, editResponse: action.response };
     default:
       return state;
   }

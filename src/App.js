@@ -64,23 +64,32 @@ function App() {
 
   const handleIndent = (e) => {
     e.preventDefault();
-    console.log(value);
-    dispatch(
-      requestIntention({
-        text: value,
-        authorization: window.localStorage.getItem("auth_token"),
-      })
-    );
+    if (value === "") {
+      alert("Vui lòng nhập dữ liệu.");
+    } else {
+      dispatch(
+        requestCorrection({
+          text: value,
+          authorization: window.localStorage.getItem("auth_token"),
+        })
+      );
+      alert("Train dữ liệu thành công");
+    }
   };
 
   const handleCorrect = (e) => {
     e.preventDefault();
-    dispatch(
-      requestCorrection({
-        text: value,
-        authorization: window.localStorage.getItem("auth_token"),
-      })
-    );
+    if (value === "") {
+      alert("Vui lòng nhập dữ liệu.");
+    } else {
+      dispatch(
+        requestCorrection({
+          text: value,
+          authorization: window.localStorage.getItem("auth_token"),
+        })
+      );
+      alert("Train dữ liệu thành công");
+    }
   };
   return (
     <div>
@@ -94,10 +103,10 @@ function App() {
           placeholder="Nhập dữ liệu"
         />
         <br />
-        <Typography variant="h6">
+        {/* <Typography variant="h6">
           hoặc tải lên file .txt hoặc .csv:{" "}
           <input onChange={handleFile} type="file" accept=".txt, .csv" />
-        </Typography>
+        </Typography> */}
         <br />
         <ButtonGroup fullWidth>
           <Button
@@ -117,7 +126,6 @@ function App() {
         </ButtonGroup>
 
         <br />
-        <div style={{ lineBreak: 0.5 }}>{value}</div>
       </Container>
     </div>
   );

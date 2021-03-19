@@ -48,6 +48,7 @@ module.exports.getUser = (req, res, next) => {
           data: {
             id: document._id,
             username: document.username,
+            createdAt: moment(document.createdAt).format("LLLL"),
             activities: document.activities.map((item) => {
               return {
                 id: item._id,
@@ -88,11 +89,6 @@ module.exports.registerUser = async (req, res, next) => {
             .status(200)
             .json({ success: true, header: `Bearer ${token}` });
         });
-        // .catch((err) => {
-        //   return res.status(400).json({
-        //     error: err,
-        //   });
-        // });
       });
   } else {
     return res.status(301).json({ message: userData.error.details[0].message });
@@ -126,5 +122,32 @@ module.exports.loginUser = (req, res, next) => {
     });
   } else {
     return res.status(301).json({ message: userData.error.details[0].message });
+  }
+};
+
+module.exports.editUser = async (req, res, next) => {
+  let isExist = await Account.findOne({ _id: req.params.id });
+  if (!isExist)
+    return res.status(404).json({ success: false, message: "User not found" });
+  if (req.body.password) {
+    bcrypt.hash(req.body.password, 10).then(async (hash) => {
+      let result = await Account.updateOne(
+        { _id: req.params.id },
+        {
+          username: req.body.username,
+          password: hash,
+        }
+      );
+
+      return res.status(200).json({ success: true, response: result });
+    });
+  } else {
+    let result = await Account.updateOne(
+      { _id: req.params.id },
+      {
+        username: req.body.username,
+      }
+    );
+    return res.status(200).json({ success: true, response: result });
   }
 };

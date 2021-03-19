@@ -17,6 +17,9 @@ module.exports.listActivities = (req, res, next) => {
 };
 
 module.exports.addActivity = (req, res, next) => {
+  if (req.body.content === "") {
+    return res.status(400).json({ success: false, message: "Empty input" });
+  }
   let data = new Activity({
     actType: req.body.actType,
     content: req.body.content,
