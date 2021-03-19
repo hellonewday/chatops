@@ -5,10 +5,22 @@ import {
   Container,
   Toolbar,
   Typography,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import React from "react";
 function Header() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div>
       <AppBar position="static" style={{ backgroundColor: "#006064" }}>
@@ -30,7 +42,14 @@ function Header() {
                 </Link>
               </Typography>
               {window.localStorage.getItem("auth_token") ? (
-                <Typography variant="h6">Hello {window.localStorage.getItem("username")}</Typography>
+                <Typography
+                  variant="h6"
+                  onClick={handleClick}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                >
+                  Hello {window.localStorage.getItem("username")}
+                </Typography>
               ) : (
                 <ButtonGroup>
                   <Button color="inherit">
@@ -48,10 +67,28 @@ function Header() {
                     >
                       Register
                     </Link>
-                    
                   </Button>
                 </ButtonGroup>
               )}
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                // anchorOrigin={{
+                //   vertical: "bottom",
+                //   horizontal: "center",
+                // }}
+                // transformOrigin={{
+                //   vertical: "bottom",
+                //   horizontal: "center",
+                // }}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
             </div>
           </Toolbar>
         </Container>
