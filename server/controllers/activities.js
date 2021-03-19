@@ -18,7 +18,7 @@ module.exports.listActivities = (req, res, next) => {
 
 module.exports.addActivity = (req, res, next) => {
   let data = new Activity({
-    actType: req.body.type,
+    actType: req.body.actType,
     content: req.body.content,
     user: req.user._id,
   });

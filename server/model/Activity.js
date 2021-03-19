@@ -5,7 +5,6 @@ const ActivitySchema = new Schema(
   {
     actType: {
       type: String,
-      enum: ["Correction", "Detection"],
     },
     content: String,
     user: {

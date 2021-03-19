@@ -22,8 +22,8 @@ const Login = () => {
 
   if (login.header) {
     window.localStorage.setItem("auth_token", login.header);
-    window.localStorage.setItem("username", data.username);
-    return <Redirect to="/" />;
+    window.localStorage.setItem("id",login.id);
+    window.location.replace("/");
   }
 
   return (

@@ -31,3 +31,14 @@ export const callLogin = async (data) => {
   let result = response.json();
   return result;
 };
+
+export const callUser = async (data) => {
+  let response = await fetch(`http://localhost:3001/accounts/${data}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  let result = response.json();
+  return result;
+};

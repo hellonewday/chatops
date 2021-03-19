@@ -1,5 +1,9 @@
 import { all } from "redux-saga/effects";
-import { watchSagaLogin, watchSagaRegister } from "./accounts";
+import {
+  watchSagaLogin,
+  watchSagaRegister,
+  watchSagaRetrieveUser,
+} from "./accounts";
 import { watchSagaCorrection } from "./correction";
 import { watchSagaIntention } from "./intention";
 export default function* rootSagas() {
@@ -8,5 +12,6 @@ export default function* rootSagas() {
     watchSagaRegister(),
     watchSagaCorrection(),
     watchSagaIntention(),
+    watchSagaRetrieveUser(),
   ]);
 }

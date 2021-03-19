@@ -9,12 +9,28 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
+import { requestUser } from "../redux/actions/accounts";
+import { useDispatch, useSelector } from "react-redux";
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const user = useSelector((state) => state.accounts.user);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(requestUser(window.localStorage.getItem("id")));
+  }, []);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+    window.localStorage.removeItem("auth_token");
+    window.location.replace("/login");
   };
 
   const handleClose = () => {
@@ -48,7 +64,9 @@ function Header() {
                   aria-controls="simple-menu"
                   aria-haspopup="true"
                 >
-                  Hello {window.localStorage.getItem("username")}
+                  {/* Hello {user["data"] || "User"} */}
+                  Hello{" "}
+                  {user && user["data"] ? user["data"]["username"] : "User"}
                 </Typography>
               ) : (
                 <ButtonGroup>
@@ -75,6 +93,18 @@ function Header() {
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
+                disableAutoFocusItem
+                PaperProps={{
+                  style: {
+                    left: "50%",
+                    top: "100%",
+                  },
+                }}
+                MenuListProps={{
+                  style: {
+                    padding: 0,
+                  },
+                }}
                 onClose={handleClose}
                 // anchorOrigin={{
                 //   vertical: "bottom",
@@ -85,9 +115,16 @@ function Header() {
                 //   horizontal: "center",
                 // }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link
+                    to="/activities"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    Nhật ký hoạt động
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>Cài đặt tài khoản</MenuItem>
+                <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
               </Menu>
             </div>
           </Toolbar>

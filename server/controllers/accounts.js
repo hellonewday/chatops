@@ -2,6 +2,9 @@ const bcrypt = require("bcryptjs");
 const Joi = require("joi");
 const Account = require("../model/Account");
 const jwt = require("jsonwebtoken");
+const moment = require("moment");
+
+moment.locale("vi");
 const validateUser = (user) => {
   const schema = Joi.object({
     username: Joi.string().required().min(6).max(20),
@@ -36,16 +39,27 @@ module.exports.listUsers = (req, res, next) => {
 };
 
 module.exports.getUser = (req, res, next) => {
-  Account.findOne({ _id: req.params.id }).exec((error, document) => {
-    if (error) return res.status(400).json({ error });
-    else
-      return res.status(200).json({
-        data: document,
-      });
-  });
+  Account.findOne({ _id: req.params.id })
+    .populate("activities", "actType content createdAt")
+    .exec((error, document) => {
+      if (error) return res.status(400).json({ error });
+      else
+        return res.status(200).json({
+          data: {
+            id: document._id,
+            username: document.username,
+            activities: document.activities.map((item) => {
+              return {
+                id: item._id,
+                actType: item.actType,
+                content: item.content,
+                createdAt: moment(item.createdAt).format("LLLL"),
+              };
+            }),
+          },
+        });
+    });
 };
-
-
 
 module.exports.registerUser = async (req, res, next) => {
   let isExist = await Account.findOne({ username: req.body.username });
@@ -59,28 +73,26 @@ module.exports.registerUser = async (req, res, next) => {
     if (isCoincide(req.body.username, req.body.password))
       return res
         .status(403)
-        .json({ message: "Username and password must be explicit" }); 
+        .json({ message: "Username and password must be explicit" });
     else
       bcrypt.hash(req.body.password, 10, (error, hash) => {
         let acc = new Account({
           username: req.body.username,
           password: hash,
         });
-        acc
-          .save()
-          .then(() => {
-            let token = jwt.sign({ id: acc._id }, process.env.JWT_SECRET, {
-              expiresIn: "1d",
-            });
-            return res
-              .status(200)
-              .json({ success: true, header: `Bearer ${token}` });
-          })
-          // .catch((err) => {
-          //   return res.status(400).json({
-          //     error: err,
-          //   });
-          // });
+        acc.save().then(() => {
+          let token = jwt.sign({ id: acc._id }, process.env.JWT_SECRET, {
+            expiresIn: "1d",
+          });
+          return res
+            .status(200)
+            .json({ success: true, header: `Bearer ${token}` });
+        });
+        // .catch((err) => {
+        //   return res.status(400).json({
+        //     error: err,
+        //   });
+        // });
       });
   } else {
     return res.status(301).json({ message: userData.error.details[0].message });
@@ -105,7 +117,9 @@ module.exports.loginUser = (req, res, next) => {
             let token = jwt.sign({ id: document._id }, process.env.JWT_SECRET, {
               expiresIn: "1d",
             });
-            return res.status(200).json({ header: `Bearer ${token}` });
+            return res
+              .status(200)
+              .json({ header: `Bearer ${token}`, id: document._id });
           }
         });
       }
