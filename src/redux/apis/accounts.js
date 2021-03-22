@@ -1,7 +1,7 @@
 export const callRegister = async (data) => {
   console.log("Hello data");
   console.log(data);
-  let response = await fetch("http://localhost:3001/accounts", {
+  let response = await fetch("http://203.171.21.65:3001/ccounts", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -17,7 +17,7 @@ export const callRegister = async (data) => {
 };
 
 export const callLogin = async (data) => {
-  let response = await fetch("http://localhost:3001/accounts/login", {
+  let response = await fetch("http://203.171.21.65:3001/accounts/login", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -33,7 +33,7 @@ export const callLogin = async (data) => {
 };
 
 export const callUser = async (data) => {
-  let response = await fetch(`http://localhost:3001/accounts/${data}`, {
+  let response = await fetch(`http://203.171.21.65:3001/accounts/${data}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -44,7 +44,7 @@ export const callUser = async (data) => {
 };
 
 export const callEditUser = async (data) => {
-  let response = await fetch(`http://localhost:3001/accounts/${data.id}`, {
+  let response = await fetch(`http://203.171.21.65:3001/accounts/${data.id}`, {
     method: "PATCH",
     headers: {
       Accept: "application/json",

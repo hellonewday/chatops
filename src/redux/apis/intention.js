@@ -1,5 +1,5 @@
 export const callIntention = async (data) => {
-  let response = await fetch("http://localhost:3001/activities", {
+  let response = await fetch("http://203.171.21.65:3001/activities", {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

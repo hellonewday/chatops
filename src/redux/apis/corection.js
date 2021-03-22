@@ -1,5 +1,5 @@
 export const callCorrection = async (data) => {
-  let response = await fetch("http://localhost:3001/activities", {
+  let response = await fetch("http://203.171.21.65:3001/activities", {
     method: "POST",
     headers: {
       Accept: "application/json",
