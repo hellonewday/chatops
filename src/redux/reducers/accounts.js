@@ -18,10 +18,10 @@ const accountReducer = function (state = initialState, action) {
       return { ...state, loginResponse: action.response };
     case REGISTER_USER_SUCCESS:
       return { ...state, registerResponse: action.response };
-    case RETRIEVE_USER_SUCCESS:
-      return { ...state, user: action.response };
     case EDIT_USER_SUCCESS:
       return { ...state, editResponse: action.response };
+    case RETRIEVE_USER_SUCCESS:
+      return { ...state, user: action.response };
     default:
       return state;
   }

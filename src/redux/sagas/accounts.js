@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { editUser } from "../../../server/controllers/accounts";
 import {
   responseRegister,
   responseLogin,
@@ -68,5 +67,5 @@ export function* watchSagaRetrieveUser() {
 }
 
 export function* watchSagaEditUser() {
-  yield takeLatest(EDIT_USER, editUser);
+  yield takeLatest(EDIT_USER, callEdit);
 }

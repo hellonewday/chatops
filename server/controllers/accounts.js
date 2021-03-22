@@ -130,6 +130,14 @@ module.exports.editUser = async (req, res, next) => {
   if (!isExist)
     return res.status(404).json({ success: false, message: "User not found" });
   if (req.body.password) {
+    if (validateUser(req.body).error) {
+      return res
+        .status(401)
+        .json({
+          success: false,
+          message: validateUser(req.body).error.details[0].message,
+        });
+    }
     bcrypt.hash(req.body.password, 10).then(async (hash) => {
       let result = await Account.updateOne(
         { _id: req.params.id },

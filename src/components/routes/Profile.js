@@ -10,14 +10,20 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { requestEdit } from "../../redux/actions/accounts";
 
 function Profile(props) {
   const [profile, setProfile] = useState({});
+  const [status, setStatus] = useState("");
+
   const user = useSelector((state) => state.accounts.user);
-  const [status, setStatus] = useState("idle");
+
+  const response = useSelector((state) => state.accounts.editResponse);
+
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value });
@@ -28,10 +34,16 @@ function Profile(props) {
     if (profile.retype !== profile.password) {
       setStatus("conflict");
     } else {
-      setStatus("success");
+      let data = {
+        username: profile.username,
+        password: profile.password,
+        id: window.localStorage.getItem("id"),
+        authorization: window.localStorage.getItem("auth_token"),
+      };
+      dispatch(requestEdit(data));
+      console.log(response);
     }
   };
-
   return (
     <div style={{ padding: 30 }}>
       <Container>
@@ -49,12 +61,16 @@ function Profile(props) {
         <Divider />
         <br />
 
-        {status === "idle" ? (
+        {response && response.success === true ? (
+          <Alert severity="success">Chỉnh sửa thông tin thành công</Alert>
+        ) : response && response.success === false ? (
+          <Alert severity="warning">{response.message}</Alert>
+        ) : (
           ""
-        ) : status === "success" ? (
-          <Alert severity="success">Thay đổi thành công</Alert>
-        ) : status === "conflict" ? (
-          <Alert severity="warning">Mật khẩu không trùng khớp</Alert>
+        )}
+
+        {status === "conflict" ? (
+          <Alert severity="warning">Mật khẩu phải trùng khớp</Alert>
         ) : (
           ""
         )}
