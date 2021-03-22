@@ -10,7 +10,7 @@ require("./passport.js");
 const accounts = require("./routes/accounts");
 const activities = require("./routes/activities");
 mongoose.connect(
-  `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0-4veva.gcp.mongodb.net/chatops?retryWrites=true&w=majority`,
+  `mongodb://localhost:27017/chatops`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
