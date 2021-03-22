@@ -1,7 +1,7 @@
 export const callRegister = async (data) => {
   console.log("Hello data");
   console.log(data);
-  let response = await fetch("http://203.171.21.65:3001/ccounts", {
+  let response = await fetch("http://203.171.21.65:3001/accounts", {
     method: "POST",
     headers: {
       Accept: "application/json",
