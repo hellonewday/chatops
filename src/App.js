@@ -10,6 +10,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { requestIntention } from "./redux/actions/intention";
 import { requestCorrection } from "./redux/actions/correction";
+import { Alert } from "@material-ui/lab";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
 function App() {
   const [value, setValue] = useState("");
@@ -22,6 +25,7 @@ function App() {
   const handleChange = (e) => {
     setValue(e.target.value);
   };
+  /* The below function is using for unsupported feature. */
   const handleFile = (event) => {
     event.preventDefault();
     if (
@@ -68,12 +72,13 @@ function App() {
       alert("Vui lòng nhập dữ liệu.");
     } else {
       dispatch(
-        requestCorrection({
+        requestIntention({
           text: value,
           authorization: window.localStorage.getItem("auth_token"),
         })
       );
-      alert("Train dữ liệu thành công");
+
+      console.log(result.intention.intention.success);
     }
   };
 
@@ -88,7 +93,8 @@ function App() {
           authorization: window.localStorage.getItem("auth_token"),
         })
       );
-      alert("Train dữ liệu thành công");
+
+      console.log(result.correction.correction.success);
     }
   };
   return (
@@ -103,6 +109,7 @@ function App() {
           placeholder="Nhập dữ liệu"
         />
         <br />
+        {/* Below code is using for unsupported feature */}
         {/* <Typography variant="h6">
           hoặc tải lên file .txt hoặc .csv:{" "}
           <input onChange={handleFile} type="file" accept=".txt, .csv" />
@@ -124,6 +131,21 @@ function App() {
             Intent Detection
           </Button>
         </ButtonGroup>
+
+        {result.intention.intention.success ||
+        result.correction.correction.success ? (
+          <Alert severity="info">
+            [{moment().format("LLLL")}] Hoạt động mới -{" "}
+            <Link
+              to="/activities"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <b>Kiểm tra</b>
+            </Link>
+          </Alert>
+        ) : (
+          ""
+        )}
 
         <br />
       </Container>

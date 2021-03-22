@@ -55,6 +55,10 @@ module.exports.getUser = (req, res, next) => {
                 actType: item.actType,
                 content: item.content,
                 createdAt: moment(item.createdAt).format("LLLL"),
+                statistical: {
+                  date: moment(item.createdAt).format("L"),
+                  hour: moment(item.createdAt).format("LT"),
+                },
               };
             }),
           },
@@ -131,12 +135,10 @@ module.exports.editUser = async (req, res, next) => {
     return res.status(404).json({ success: false, message: "User not found" });
   if (req.body.password) {
     if (validateUser(req.body).error) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          message: validateUser(req.body).error.details[0].message,
-        });
+      return res.status(401).json({
+        success: false,
+        message: validateUser(req.body).error.details[0].message,
+      });
     }
     bcrypt.hash(req.body.password, 10).then(async (hash) => {
       let result = await Account.updateOne(

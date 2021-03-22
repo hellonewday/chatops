@@ -11,13 +11,15 @@ const middleware = createSagaNiddleware();
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["accounts","activities"]
+  blacklist: ["accounts", "activities", "intention", "correction"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(persistedReducer, composeWithDevTools(
-  applyMiddleware(middleware)));
+export const store = createStore(
+  persistedReducer,
+  composeWithDevTools(applyMiddleware(middleware))
+);
 
 export const persistor = persistStore(store);
 
