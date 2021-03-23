@@ -4,7 +4,7 @@ export const callCorrection = async (data) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "Authorization": data.authorization
+      Authorization: data.authorization,
     },
     body: JSON.stringify({
       actType: "Correction",

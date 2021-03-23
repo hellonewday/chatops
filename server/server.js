@@ -11,7 +11,9 @@ require("./passport.js");
 const accounts = require("./routes/accounts");
 const activities = require("./routes/activities");
 mongoose.connect(
-  `mongodb://localhost:27017/chatops`,
+  os.platform() === "win32"
+    ? `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0-4veva.gcp.mongodb.net/chatops?retryWrites=true&w=majority`
+    : `mongodb://localhost:27017/chatops`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -31,5 +33,5 @@ app.use(passport.initialize());
 app.use("/accounts", accounts);
 app.use("/activities", activities);
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`Listening on port ${port} on ${os.platform()}`);
 });
