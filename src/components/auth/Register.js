@@ -1,12 +1,13 @@
+import React, { useState } from "react";
 import { Button, Container, TextField, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { requestLogin } from "../redux/actions/accounts";
+import { requestRegister } from "../../redux/actions/accounts";
 
-const Login = () => {
+function Register({ props }) {
   const [data, setData] = useState({});
-  const login = useSelector((state) => state.accounts.loginResponse);
+
+  const register = useSelector((state) => state.accounts.registerResponse);
 
   const dispatch = useDispatch();
 
@@ -16,12 +17,13 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(requestLogin(data));
+    dispatch(requestRegister(data));
+    console.log(data);
   };
 
-  if (login.header) {
-    window.localStorage.setItem("auth_token", login.header);
-    window.localStorage.setItem("id",login.id);
+  if (register.header) {
+    window.localStorage.setItem("auth_token", register.header);
+    window.localStorage.setItem("id", register.id);
     window.location.replace("/");
   }
 
@@ -35,38 +37,42 @@ const Login = () => {
           onSubmit={handleSubmit}
         >
           <Typography variant="h6">
-            <b>Login to ChatOps</b>
+            <b>Register to ChatOps</b>
           </Typography>
-          {login.message ? <Alert severity="error">{login.message}</Alert> : ""}
+          {register.message ? (
+            <Alert severity="error">{register.message}</Alert>
+          ) : (
+            ""
+          )}
           <br />
           <TextField
             label="Username"
             name="username"
             fullWidth
-            type="text"
-            variant="outlined"
-            onChange={handleChange}
-          />
-          <br />
-          <br />
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            fullWidth
             variant="outlined"
             onChange={handleChange}
           />
           <br />
           <br />
 
-          <Button type="submit" fullWidth variant="contained" color="primary">
-            Login
+          <TextField
+            label="Password"
+            name="password"
+            fullWidth
+            type="password"
+            variant="outlined"
+            onChange={handleChange}
+          />
+          <br />
+          <br />
+
+          <Button type="submit" fullWidth variant="contained" color="secondary">
+            Register
           </Button>
         </form>
       </Container>
     </div>
   );
-};
+}
 
-export default Login;
+export default Register;
