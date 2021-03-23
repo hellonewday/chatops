@@ -91,7 +91,7 @@ module.exports.registerUser = async (req, res, next) => {
           });
           return res
             .status(200)
-            .json({ success: true, header: `Bearer ${token}` });
+            .json({ success: true, header: `Bearer ${token}`, id: acc._id });
         });
       });
   } else {

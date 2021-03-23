@@ -23,7 +23,7 @@ function Register({ props }) {
 
   if (register.header) {
     window.localStorage.setItem("auth_token", register.header);
-    window.localStorage.setItem("username", data.username);
+    window.localStorage.setItem("id", register.id);
     window.location.replace("/");
   }
 
