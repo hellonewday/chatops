@@ -13,7 +13,7 @@ import { Alert } from "@material-ui/lab";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { requestEdit } from "../../redux/actions/accounts";
+import { requestEdit } from "../../../redux/actions/accounts";
 
 function Profile(props) {
   const [profile, setProfile] = useState({});

@@ -1,9 +1,8 @@
 import { Button, Container, TextField, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestLogin } from "../redux/actions/accounts";
-import { Redirect } from "react-router-dom";
 
 const Login = () => {
   const [data, setData] = useState({});

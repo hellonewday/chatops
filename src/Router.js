@@ -4,8 +4,8 @@ import Header from "./components/Header";
 import App from "./App";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ActivityLog from "./components/routes/ActivityLog";
-import Profile from "./components/routes/Profile";
+import ActivityLog from "./components/routes/activities/ActivityLog";
+import Profile from "./components/routes/profile/Profile";
 export default class Router extends Component {
   render() {
     return (

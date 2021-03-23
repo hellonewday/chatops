@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Container, TextField, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { requestRegister } from "../redux/actions/accounts";
-import { Redirect } from "react-router-dom";
-import axios from "axios";
 
 function Register({ props }) {
   const [data, setData] = useState({});
@@ -26,7 +24,7 @@ function Register({ props }) {
   if (register.header) {
     window.localStorage.setItem("auth_token", register.header);
     window.localStorage.setItem("username", data.username);
-    return <Redirect to="/" />;
+    window.location.replace("/");
   }
 
   return (

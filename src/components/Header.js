@@ -21,7 +21,7 @@ function Header() {
 
   useEffect(() => {
     dispatch(requestUser(window.localStorage.getItem("id")));
-  }, []);
+  }, [dispatch]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

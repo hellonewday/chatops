@@ -1,11 +1,10 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   ButtonGroup,
   Container,
   TextareaAutosize,
-  Typography,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { requestIntention } from "./redux/actions/intention";
@@ -26,45 +25,45 @@ function App() {
     setValue(e.target.value);
   };
   /* The below function is using for unsupported feature. */
-  const handleFile = (event) => {
-    event.preventDefault();
-    if (
-      event.target.files[0] &&
-      event.target.files[0].type === "application/vnd.ms-excel"
-    ) {
-      let reader = new FileReader();
-      reader.onload = async (e) => {
-        const text = e.target.result;
-        console.log(e.target);
-        let csvMatrix = text
-          .split("\n")
-          .slice(1, text.split("\n").length)
-          .map((item) => {
-            return item.split(",");
-          });
-        setValue(
-          csvMatrix
-            .map((item) => {
-              return item[1];
-            })
-            .join(" ")
-        );
-      };
-      reader.readAsText(event.target.files[0]);
-    } else if (
-      event.target.files[0] &&
-      event.target.files[0].type === "text/plain"
-    ) {
-      let reader = new FileReader();
-      reader.onload = async (e) => {
-        const text = e.target.result;
-        setValue(text);
-      };
-      reader.readAsText(event.target.files[0]);
-    } else {
-      return false;
-    }
-  };
+  // const handleFile = (event) => {
+  //   event.preventDefault();
+  //   if (
+  //     event.target.files[0] &&
+  //     event.target.files[0].type === "application/vnd.ms-excel"
+  //   ) {
+  //     let reader = new FileReader();
+  //     reader.onload = async (e) => {
+  //       const text = e.target.result;
+  //       console.log(e.target);
+  //       let csvMatrix = text
+  //         .split("\n")
+  //         .slice(1, text.split("\n").length)
+  //         .map((item) => {
+  //           return item.split(",");
+  //         });
+  //       setValue(
+  //         csvMatrix
+  //           .map((item) => {
+  //             return item[1];
+  //           })
+  //           .join(" ")
+  //       );
+  //     };
+  //     reader.readAsText(event.target.files[0]);
+  //   } else if (
+  //     event.target.files[0] &&
+  //     event.target.files[0].type === "text/plain"
+  //   ) {
+  //     let reader = new FileReader();
+  //     reader.onload = async (e) => {
+  //       const text = e.target.result;
+  //       setValue(text);
+  //     };
+  //     reader.readAsText(event.target.files[0]);
+  //   } else {
+  //     return false;
+  //   }
+  // };
 
   const handleIndent = (e) => {
     e.preventDefault();
@@ -94,7 +93,6 @@ function App() {
         })
       );
 
-      console.log(result.correction.correction.success);
     }
   };
   return (
