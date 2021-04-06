@@ -1,0 +1,6 @@
+
+> server@1.0.0 start /root/chatops/server
+> node server.js
+
+Listening on port 3001 on linux
+Connect to database
