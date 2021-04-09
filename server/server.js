@@ -10,6 +10,7 @@ require("./passport.js");
 
 const accounts = require("./routes/accounts");
 const activities = require("./routes/activities");
+
 mongoose.connect(
   os.platform() === "win32"
     ? `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0-4veva.gcp.mongodb.net/chatops?retryWrites=true&w=majority`
@@ -23,6 +24,7 @@ mongoose.connect(
     console.log("Connect to database");
   }
 );
+
 
 app.use(cors());
 app.use("/", express.static(__dirname));
